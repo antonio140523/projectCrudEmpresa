@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/funcionarioCTR")
@@ -50,4 +52,21 @@ public class FuncionarioController {
         ligacaoFuncionarioService.cadastFuncionario(objFuncionario);
         return "redirect:/funcionarioCTR/listarFunc";
     }
-}
+
+    @GetMapping("/formAtualizar/{id}")
+    public String formAtualizarFuncionario (@PathVariable ("id") Long id, Model oModel){
+
+        Funcionario funcionarioEncontrado = ligacaoFuncionarioService.buscarFuncionarioPorId(id).orElseThrow(
+            () -> new IllegalArgumentException("Funcionario não encontrado"));
+
+        oModel.addAttribute("funcionario",  funcionarioEncontrado);
+        oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
+             return "redirect:/funcionarioCTR/editarFuncionario";
+
+
+    }
+
+       
+    }
+    
+
