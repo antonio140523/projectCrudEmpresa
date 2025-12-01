@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -61,12 +63,27 @@ public class FuncionarioController {
 
         oModel.addAttribute("funcionario",  funcionarioEncontrado);
         oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
-             return "redirect:/funcionarioCTR/editarFuncionario";
+             return "editarFuncionario";
 
 
     }
+
+    @PostMapping("atualizarFuncionario/{id}")
+    public String postMethodName(@PathVariable ("id")  Long id,
+    @ModelAttribute Funcionario objFuncionarioAtualizado){
+    
+        ligacaoFuncionarioService.atualizarFuncionario(id, objFuncionarioAtualizado);
+        
+        
+        return "redirect:/funcionarioCTR/listarFunc";
+     
+}
+
+
+    }
+    
 
        
-    }
+    
     
 
