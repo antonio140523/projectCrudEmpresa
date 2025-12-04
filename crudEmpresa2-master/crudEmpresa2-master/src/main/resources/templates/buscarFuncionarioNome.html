@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Funcionario</title>
+
+    <style>
+    table, th, td {
+    border: 1px solid black; /* Applies a 1px solid black border to the table, table headers, and table data cells */
+    border-collapse: collapse; /* Collapses adjacent borders into a single border */
+    }
+    </style>
+
+</head>
+<body>
+
+    <h2>Buscar Funcionario por Nome</h2>
+
+    <!-- Formulário de busca -->
+    <form th:action="@{/funcionarioCTR/buscarFuncionarioNome}" method="get">
+        <div>
+            <input type="text" name="nome" th:value="${param.nome}" />
+            <button type="submit">Buscar</button>
+        </div>
+    </form>
+    
+    <br>
+
+    <!-- Exibe a tabela com os resultados -->
+    <div th:if="${funcionarioNome}">
+        <h4 th:text="'Resultado da busca: ' + ${funcionarioNome.size()} + 'funcionario(s) encontrado(s)'"></h4>
+
+        <table> 
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Salario</th>
+                    <th>Cargo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="empresa : ${funcionarioNome}">
+                    <td th:text="${funcionario.id_funcionario}"></td>
+                    <td th:text="${funcionario.nome}"></td>
+                    <td th:text="${funcionario.cnpj}"></td>
+                    <td th:text="${funcionario.ramo}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

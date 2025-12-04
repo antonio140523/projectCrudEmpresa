@@ -76,11 +76,33 @@ public class FuncionarioController {
         
         
         return "redirect:/funcionarioCTR/listarFunc";
+    }
+
+        @GetMapping("/deletarFuncionario/{id}")
+        public String apagarFuncionarioString(@PathVariable("id") Long id) {
+            ligacaoFuncionarioService.deletarFuncionario(id);
+    return "redirect:/funcionarioCTR/listarFunc";
+        }
+
+    @GetMapping("/formBuscarNome")
+  public String mostrarFormBusca(Model oModel) {
+    return "buscarFuncionarioNome";
+  }
      
+  @GetMapping("/buscarFuncionarioPorNome")
+  public String executarBuscaPorNome(@RequestParam("nome") String nome_func, Model oModel) {
+    if(nome_func != null && !nome_func.isEmpty()){
+        oModel.addAttribute("empresaNome", 
+        ligacaoFuncionarioService.buscarFuncionarioPorNome(nome_func));
+    }
+      return "buscarFuncionarioPorNome";
+
+}
+
 }
 
 
-    }
+    
     
 
        
