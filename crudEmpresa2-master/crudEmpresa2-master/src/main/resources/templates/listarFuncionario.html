@@ -2,50 +2,196 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Listar Funcionários</title>
+    <title>Lista de Funcionários - Estilo Interestelar</title>
 
     <style>
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
-    </style>
+        /* ------ FUNDO ESPACIAL ------ */
+        body {
+            font-family: "Orbitron", sans-serif;
+            background: radial-gradient(ellipse at center, #0b0c1b 0%, #000000 100%);
+            color: #f0f8ff;
+            margin: 0;
+            padding: 25px;
+            overflow-x: hidden;
+        }
 
+        /* ------ TÍTULO INTERESTELAR ------ */
+        h2 {
+            font-size: 32px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff, 0 0 30px #00bfff;
+            border-left: 6px solid #00ffff;
+            padding-left: 12px;
+            margin-bottom: 25px;
+        }
+
+        /* ------ CONTAINER ------ */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            overflow-x: auto;
+            padding: 10px;
+        }
+
+        /* ------ TABELA GALÁCTICA ------ */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(10, 12, 25, 0.85);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        th {
+            background: rgba(0, 20, 40, 0.85);
+            color: #00ffff;
+            border-bottom: 2px solid #00bfff;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        td {
+            color: #c0f7ff;
+            border-bottom: 1px solid #1a2a3f;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(0, 0, 20, 0.5);
+        }
+
+        tr:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+            box-shadow: inset 0 0 10px #00ffff;
+            transition: 0.25s;
+        }
+
+        /* ------ BOTÕES DE AÇÃO ------ */
+        .actions a {
+            margin-right: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: rgba(0, 0, 30, 0.7);
+            border: 1px solid #00bfff;
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 13px;
+            text-shadow: 0 0 5px #00ffff;
+            transition: 0.3s;
+        }
+
+        .actions a:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 12px #00ffff;
+            color: #e0f8ff;
+        }
+
+        /* ------ BOTÃO NOVO FUNCIONÁRIO ------ */
+        .new-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 22px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #00ffff, #1e90ff);
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 0 20px #00ffff, 0 0 40px #1e90ff;
+            transition: 0.3s;
+        }
+
+        .new-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffff, 0 0 50px #1e90ff;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            tr {
+                margin-bottom: 18px;
+                background: rgba(0, 0, 25, 0.85);
+                border-radius: 12px;
+                padding: 12px;
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            }
+
+            td {
+                padding: 8px;
+                border: none;
+                position: relative;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #00ffff;
+                display: block;
+                margin-bottom: 6px;
+                text-shadow: 0 0 5px #00ffff;
+            }
+
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .new-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<h2>Lista de Funcionários</h2>
+<div class="container">
+    <h2>Lista de Funcionários</h2>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>Codigo</th>
-            <th>Nome</th>
-            <th>Cargo</th>
-            <th>Salário</th>
-            <th>Empresa</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="func : ${funcionarios}">
-            <td th:text="${func.codigo}"></td>
-            <td th:text="${func.nome}"></td>
-            <td th:text="${func.cargo}"></td>
-            <td th:text="${func.salario}"></td>
-            <td th:text="${func.identificadorEmpresa.nome}"></td>
-            <td>
-                <a th:href="@{/funcionarioCTR/formAtualizar/{id}(id=${func.codigo})}">Editar</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Salário</th>
+                <th>Empresa</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="func : ${funcionarios}">
+                <td data-label="Codigo" th:text="${func.codigo}"></td>
+                <td data-label="Nome" th:text="${func.nome}"></td>
+                <td data-label="Cargo" th:text="${func.cargo}"></td>
+                <td data-label="Salário" th:text="${func.salario}"></td>
+                <td data-label="Empresa" th:text="${func.identificadorEmpresa.nome}"></td>
+                <td data-label="Ações" class="actions">
+                    <a th:href="@{/funcionarioCTR/formAtualizar/{id}(id=${func.codigo})}">Editar</a>
+                    <a th:href="@{/funcionarioCTR/deletarFuncionario/{id}(id=${func.codigo})}" 
+                       onclick="return confirm('Deseja realmente excluir este Funcionário?')">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-                <a th:href="@{/funcionarioCTR/deletarFuncionario/{id}(id=${func.codigo})}"
-                onclick="return confirm('Deseja realmente excluir este Funcionário?')">Excluir</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<br>
-<a th:href="@{/funcionarioCTR/}">Cadastrar Novo Funcionário</a>
+    <a class="new-btn" th:href="@{/funcionarioCTR/}">Cadastrar Novo Funcionário</a>
+</div>
 
 </body>
 </html>

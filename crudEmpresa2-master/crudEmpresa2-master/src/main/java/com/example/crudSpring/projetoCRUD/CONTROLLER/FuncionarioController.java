@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @Controller
 @RequestMapping("/funcionarioCTR")
 
@@ -56,56 +54,39 @@ public class FuncionarioController {
     }
 
     @GetMapping("/formAtualizar/{id}")
-    public String formAtualizarFuncionario (@PathVariable ("id") Long id, Model oModel){
+    public String formAtualizarFuncionario(@PathVariable("id") Long id, Model oModel) {
 
         Funcionario funcionarioEncontrado = ligacaoFuncionarioService.buscarFuncionarioPorId(id).orElseThrow(
-            () -> new IllegalArgumentException("Funcionario não encontrado"));
+                () -> new IllegalArgumentException("Funcionario não encontrado"));
 
-        oModel.addAttribute("funcionario",  funcionarioEncontrado);
+        oModel.addAttribute("funcionario", funcionarioEncontrado);
         oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
-             return "editarFuncionario";
-
+        return "editarFuncionario";
 
     }
 
     @PostMapping("atualizarFuncionario/{id}")
-    public String postMethodName(@PathVariable ("id")  Long id,
-    @ModelAttribute Funcionario objFuncionarioAtualizado){
-    
+    public String postMethodName(@PathVariable("id") Long id,
+            @ModelAttribute Funcionario objFuncionarioAtualizado) {
+
         ligacaoFuncionarioService.atualizarFuncionario(id, objFuncionarioAtualizado);
-        
-        
+
         return "redirect:/funcionarioCTR/listarFunc";
     }
 
-        @GetMapping("/deletarFuncionario/{id}")
-        public String apagarFuncionarioString(@PathVariable("id") Long id) {
-            ligacaoFuncionarioService.deletarFuncionario(id);
-    return "redirect:/funcionarioCTR/listarFunc";
-        }
-
     @GetMapping("/formBuscarNome")
-  public String mostrarFormBusca(Model oModel) {
-    return "buscarFuncionarioNome";
-  }
-     
-  @GetMapping("/buscarFuncionarioPorNome")
-  public String executarBuscaPorNome(@RequestParam("nome") String nome_func, Model oModel) {
-    if(nome_func != null && !nome_func.isEmpty()){
-        oModel.addAttribute("empresaNome", 
-        ligacaoFuncionarioService.buscarFuncionarioPorNome(nome_func));
+    public String mostrarFormBusca(Model oModel) {
+        return "buscarFuncionarioNome";
     }
-      return "buscarFuncionarioPorNome";
+
+    @GetMapping("/buscarFuncionarioNome")
+    public String executarBuscaPorNome(@RequestParam("nome") String nome_func, Model oModel) {
+        if (nome_func != null && !nome_func.isEmpty()) {
+            oModel.addAttribute("empresaNome",
+                    ligacaoFuncionarioService.buscarFuncionarioNome(nome_func));
+        }
+        return "buscarFuncionarioNome";
+
+    }
 
 }
-
-}
-
-
-    
-    
-
-       
-    
-    
-

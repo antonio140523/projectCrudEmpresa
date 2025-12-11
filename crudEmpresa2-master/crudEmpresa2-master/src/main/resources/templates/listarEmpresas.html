@@ -5,13 +5,161 @@
     <title>Lista de Empresas</title>
 
 <style>
-    table, th, td {
-    border: 1px solid black; /* Applies a 1px solid black border to the table, table headers, and table data cells */
-    border-collapse: collapse; /* Collapses adjacent borders into a single border */
+    /* ---------- GLOBAL ---------- */
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #0c0f14;
+        color: #dbe9ff;
+        padding: 20px;
+        margin: 0;
     }
+
+    h2 {
+        font-size: 28px;
+        color: #5cc8ff;
+        padding-left: 12px;
+        border-left: 5px solid #5cc8ff;
+        text-shadow: 0 0 8px #5cc8ff;
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    /* ---------- TABLE STYLING ---------- */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 25px;
+        background-color: #11151c;
+        border: 1px solid #1c2635;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 12px rgba(0, 195, 255, 0.25);
+    }
+
+    thead {
+        background: linear-gradient(90deg, #1b293a, #0f1923);
+    }
+
+    th {
+        padding: 14px;
+        color: #5cc8ff;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #2a3b52;
+        text-shadow: 0 0 5px #54c0ff;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #1c2533;
+        color: #c8d9ff;
+        font-size: 15px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #0e131a;
+    }
+
+    tr:hover {
+        background-color: #16202c;
+        transition: 0.2s;
+    }
+
+    /* ---------- ACTION BUTTONS ---------- */
+    .actions a {
+        margin-right: 12px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        background: #0d1826;
+        border: 1px solid #3b628a;
+        color: #9cd6ff;
+        text-decoration: none;
+        font-size: 13px;
+        transition: 0.25s;
+        box-shadow: 0 0 6px rgba(0, 153, 255, 0.2);
+    }
+
+    .actions a:hover {
+        background: #153454;
+        border-color: #5cc8ff;
+        color: #e2f4ff;
+        box-shadow: 0 0 10px #5cc8ff;
+    }
+
+    /* NEW COMPANY BUTTON */
+    .new-btn {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 14px 20px;
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        font-size: 17px;
+        transition: 0.3s;
+        letter-spacing: 1px;
+        box-shadow: 0 0 12px rgba(0, 145, 255, 0.4);
+    }
+
+    .new-btn:hover {
+        background-color: #0062cc;
+        box-shadow: 0 0 15px #54c0ff;
+    }
+
+    /* ---------- RESPONSIVE MODE (MOBILE) ---------- */
+    @media (max-width: 700px) {
+
+        table thead {
+            display: none;
+        }
+
+        table, tbody, tr, td {
+            display: block;
+            width: 100%;
+        }
+
+        tr {
+            background-color: #0f141c;
+            margin-bottom: 14px;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 162, 255, 0.25);
+        }
+
+        td {
+            padding: 10px 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        td::before {
+            content: attr(data-label);
+            color: #5cc8ff;
+            font-weight: bold;
+            margin-bottom: 6px;
+            display: block;
+            text-shadow: 0 0 6px #5cc8ff;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+    }
+
 </style>
+
 </head>
+
 <body>
+
+<div class="container">
 
     <h2>Lista de Empresas</h2>
 
@@ -25,28 +173,27 @@
                 <th>Ações</th>
             </tr>
         </thead>
+
         <tbody>
-            <!-- Loop para listar todas as empresas -->
             <tr th:each="empresa : ${empresas}">
-                <td th:text="${empresa.id_empresa}"></td>
-                <td th:text="${empresa.nome}"></td>
-                <td th:text="${empresa.cnpj}"></td>
-                <td th:text="${empresa.ramo}"></td>
-                <td>
-                    <!-- Botão Editar -->
+                <td data-label="ID" th:text="${empresa.id_empresa}"></td>
+                <td data-label="Nome" th:text="${empresa.nome}"></td>
+                <td data-label="CNPJ" th:text="${empresa.cnpj}"></td>
+                <td data-label="Ramo" th:text="${empresa.ramo}"></td>
+
+                <td data-label="Ações" class="actions">
                     <a th:href="@{/empresaCTR/editar/{id}(id=${empresa.id_empresa})}">Editar</a>
-                    
-                    <!-- Botão Excluir -->
-                    <a th:href="@{/empresaCTR/deletarEmpresa/{id}(id=${empresa.id_empresa})}" 
-                    onclick="return confirm('Deseja realmente excluir esta empresa?')">Excluir</a>
+                    <a th:href="@{/empresaCTR/deletarEmpresa/{id}(id=${empresa.id_empresa})}"
+                       onclick="return confirm('Deseja realmente excluir esta empresa?')">Excluir</a>
                 </td>
             </tr>
         </tbody>
+
     </table>
 
-    <br>
+    <a class="new-btn" th:href="@{/empresaCTR/viewCadEmpresa}">Cadastrar Nova Empresa</a>
 
-    <a th:href="@{/empresaCTR/viewCadEmpresa}">Nova Empresa</a>
+</div>
 
 </body>
 </html>

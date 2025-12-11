@@ -29,7 +29,7 @@ public class FuncionarioService {
         ligacaoFuncionarioRepostory.deleteById(id);
     }
     @Transactional
-    public void atualizarFuncionario(Long id, Funcionario dadosAtualizados) {
+    public Funcionario atualizarFuncionario(Long id, Funcionario dadosAtualizados) {
         Funcionario objtFuncionario = buscarFuncionarioPorId(id).orElseThrow(() ->
                                             new IllegalArgumentException("Funcionario nao encontrado"));
         objtFuncionario.setNome(dadosAtualizados.getNome());
@@ -37,5 +37,16 @@ public class FuncionarioService {
         objtFuncionario.setCargo(dadosAtualizados.getCargo());
         objtFuncionario.setIdentificadorEmpresa(dadosAtualizados.getIdentificadorEmpresa());
 
+        return ligacaoFuncionarioRepostory.save(objtFuncionario);
+
     }
+
+    public List<Funcionario> buscarFuncionarioNome(String nome_funcionario){
+        return ligacaoFuncionarioRepostory.findByNomeContainingIgnoreCase(nome_funcionario);
+
+    }
+
 }
+
+        
+    

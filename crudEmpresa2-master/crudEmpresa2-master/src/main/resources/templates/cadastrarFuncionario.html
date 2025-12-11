@@ -3,34 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro Funcionario</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #0c0f14;
+            color: #dbe9ff;
+            padding: 25px;
+            margin: 0;
+        }
+
+        h2 {
+            color: #5cc8ff;
+            font-size: 28px;
+            border-left: 6px solid #5cc8ff;
+            padding-left: 12px;
+            text-shadow: 0 0 10px #5cc8ff;
+            margin-bottom: 25px;
+        }
+
+        .container {
+            max-width: 550px;
+            background: #11151c;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #1f2f45;
+            margin: auto;
+            box-shadow: 0 0 14px rgba(0, 165, 255, 0.2);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-size: 15px;
+            color: #9cd6ff;
+            text-shadow: 0 0 6px #5cc8ff;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #2b4157;
+            background: #0f141c;
+            color: #dbe9ff;
+            font-size: 15px;
+            transition: 0.25s;
+        }
+
+        input:focus, select:focus {
+            border-color: #5cc8ff;
+            box-shadow: 0 0 10px #5cc8ff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            font-size: 17px;
+            border: none;
+            border-radius: 10px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: 0.25s;
+            letter-spacing: 1px;
+            box-shadow: 0 0 12px rgba(0, 145, 255, 0.4);
+        }
+
+        button:hover {
+            background: #005fcc;
+            box-shadow: 0 0 14px #5cc8ff;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .container {
+                padding: 18px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 16px;
+            }
+        }
+    </style>
+
 </head>
 <body>
 
-    <h2>Cadastrar Funcionario</h2>
+    <h2>Cadastrar Funcionário</h2>
 
-    <form th:action="@{/funcionarioCTR/salvarFuncionario}" method="post" th:object="${funcionario}">
-    
-    <label>Nome:</label>
-    <input type="text" th:field="*{nome}" required><br>
+    <div class="container">
+        <form th:action="@{/funcionarioCTR/salvarFuncionario}" method="post" th:object="${funcionario}">
 
-    <label>Cargo:</label>
-    <input type="text" th:field="*{cargo}" required><br>
+            <label>Nome:</label>
+            <input type="text" th:field="*{nome}" required>
 
-    <label>Salário:</label>
-    <input type="number" step="0.01" th:field="*{salario}" required><br>
+            <label>Cargo:</label>
+            <input type="text" th:field="*{cargo}" required>
 
-    <label for="empresa">Empresa:</label>
-    <select id="empresa" th:field="*{identificadorEmpresa}" required>
-        <option value="">Selecione uma empresa</option>
-        <option th:each="emp : ${empresas}"
-                th:value="${emp.id_empresa}"
-                th:text="${emp.nome}">
-        </option>
-    </select><br><br>
+            <label>Salário:</label>
+            <input type="number" step="0.01" th:field="*{salario}" required>
 
-    <button type="submit">Salvar</button>
+            <label for="empresa">Empresa:</label>
+            <select id="empresa" th:field="*{identificadorEmpresa}" required>
+                <option value="">Selecione uma empresa</option>
+                <option th:each="emp : ${empresas}"
+                        th:value="${emp.id_empresa}"
+                        th:text="${emp.nome}">
+                </option>
+            </select>
 
-    </form>
+            <button type="submit">Salvar</button>
+
+        </form>
+    </div>
 
 </body>
 </html>

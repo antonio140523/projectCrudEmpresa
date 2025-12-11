@@ -2,39 +2,112 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Empresa</title>
+    <title>Cadastrar Empresa - Estilo Interestelar</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
-    
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at center, #0b0c1b 0%, #000000 100%);
+            color: #c0f7ff;
+            padding: 25px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff;
+            border-left: 5px solid #00ffff;
+            padding-left: 12px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background: rgba(0, 20, 40, 0.8);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #00bfff;
+            box-shadow: 0 0 15px #00ffff;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #00bfff;
+            background-color: #11151c;
+            color: #c0f7ff;
+            font-size: 16px;
+        }
+
+        button, a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1px solid #00bfff;
+            background-color: #11151c;
+            color: #00ffff;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover, a:hover {
+            background-color: #162232;
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff;
+            transform: translateX(3px);
+        }
+
+        button:active, a:active {
+            transform: scale(0.97);
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 24px;
+            }
+
+            form {
+                padding: 20px;
+            }
+
+            button, a {
+                width: 100%;
+                text-align: center;
+                margin-top: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <h2>Cadastrar Empresa</h2>
 
-    <!-- Formulário para cadastro -->
     <form th:action="@{/empresaCTR/salvarEmpresa}" th:object="${empresa}" method="post">
-
         <label for="nome">Nome da Empresa</label>
         <input type="text" th:field="*{nome}" id="nome" required>
-        <br>
-        <br>
 
         <label for="cnpj">CNPJ</label>
         <input type="text" th:field="*{cnpj}" id="cnpj" required>
-        <br>
-        <br>
 
         <label for="ramo">Ramo da Empresa</label>
         <input type="text" th:field="*{ramo}" id="ramo" required>
-        <br>
-        <br>
 
-        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="submit">Salvar</button>
         <a th:href="@{/empresaCTR}">Cancelar</a>
-
     </form>
 
-
-   
 </body>
 </html>
-

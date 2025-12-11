@@ -2,27 +2,91 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Página principal</title>
+    <title>Página Principal - Estilo Interestelar</title>
 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+        /* ------ FUNDO ESPACIAL ------ */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at center, #0b0c1b 0%, #000000 100%);
+            color: #c0f7ff;
+            padding: 25px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* ------ TÍTULO INTERESTELAR ------ */
+        h2 {
+            font-size: 32px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff, 0 0 30px #00bfff;
+            border-left: 6px solid #00ffff;
+            padding-left: 12px;
+            margin-bottom: 30px;
+        }
+
+        /* ------ CONTAINER CENTRAL ------ */
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* ------ BOTÕES INTERESTELARES ------ */
+        a {
+            display: block;
+            margin: 14px 0;
+            font-size: 18px;
+            color: #00ffff;
+            text-decoration: none;
+            padding: 14px 18px;
+            border-radius: 10px;
+            background: rgba(0, 20, 40, 0.8);
+            border: 1px solid #00bfff;
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px #00ffff, 0 0 40px #1e90ff;
+            transform: translateX(5px);
+        }
+
+        a:active {
+            transform: scale(0.97);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 28px;
+            }
+
+            a {
+                font-size: 16px;
+                padding: 12px 14px;
+            }
+
+            body {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <h2>Links para páginas</h2>
+    <div class="container">
+        <h2>Toddy Sistemas</h2>
 
-    <a th:href="@{/empresaCTR/viewCadEmpresa}">Cadastrar Empresa</a>
-    <br>
-    <a th:href="@{/funcionarioCTR/formFuncionario}">Cadastrar Funcionario</a>
-    <br>
-    <a th:href="@{/empresaCTR/listarTodasEmpresas}">Listar todas empresas / Alterar</a>
-    <br>
-    <a th:href="@{/funcionarioCTR/listarFunc}">Listar todos os funcionarios / Alterar</a>
-    <br>
-    <a th:href="@{/empresaCTR/formBuscarNome}">Listar empresa por nome</a>
-    <br>
-    <a th:href="@{/funcionario/formBuscarNome}">Listar funcionario por nome</a>
-    <br>
+        <a th:href="@{/empresaCTR/viewCadEmpresa}">Cadastrar Empresa</a>
+        <a th:href="@{/funcionarioCTR/formFuncionario}">Cadastrar Funcionário</a>
+        <a th:href="@{/empresaCTR/listarTodasEmpresas}">Listar Todas Empresas / Alterar</a>
+        <a th:href="@{/funcionarioCTR/listarFunc}">Listar Todos os Funcionários / Alterar</a>
+        <a th:href="@{/empresaCTR/formBuscarNome}">Buscar Empresa por Nome</a>
+        <a th:href="@{/funcionarioCTR/formBuscarNome}">Buscar Funcionário por Nome</a>
+    </div>
 
-   
 </body>
 </html>
-

@@ -2,49 +2,123 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Buscar Funcionario</title>
-
+    <title>Buscar Funcionário</title>
     <style>
-    table, th, td {
-    border: 1px solid black; /* Applies a 1px solid black border to the table, table headers, and table data cells */
-    border-collapse: collapse; /* Collapses adjacent borders into a single border */
-    }
-    </style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at center, #0b0c1b 0%, #000000 100%);
+            color: #c0f7ff;
+            padding: 25px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff;
+            border-left: 5px solid #00ffff;
+            padding-left: 12px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 25px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #00bfff;
+            background-color: #11151c;
+            color: #c0f7ff;
+            width: 200px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: 1px solid #00bfff;
+            background-color: #11151c;
+            color: #00ffff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #162232;
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff;
+            transform: translateX(4px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #00bfff;
+        }
+
+        th {
+            background-color: #11151c;
+            color: #00ffff;
+        }
+
+        td {
+            background-color: #1a1b1e;
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 24px;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <h2>Buscar Funcionario por Nome</h2>
+    <h2>Buscar Funcionário por Nome</h2>
 
-    <!-- Formulário de busca -->
     <form th:action="@{/funcionarioCTR/buscarFuncionarioNome}" method="get">
-        <div>
-            <input type="text" name="nome" th:value="${param.nome}" />
-            <button type="submit">Buscar</button>
-        </div>
+        <input type="text" name="nome" th:value="${param.nome}" placeholder="Digite o nome do funcionário" />
+        <button type="submit">Buscar</button>
     </form>
-    
-    <br>
 
-    <!-- Exibe a tabela com os resultados -->
     <div th:if="${funcionarioNome}">
-        <h4 th:text="'Resultado da busca: ' + ${funcionarioNome.size()} + 'funcionario(s) encontrado(s)'"></h4>
+        <h4 th:text="'Resultado da busca: ' + ${funcionarioNome.size()} + ' funcionário(s) encontrado(s)'"></h4>
 
-        <table> 
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Salario</th>
+                    <th>Salário</th>
                     <th>Cargo</th>
+                    <th>Empresa</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="empresa : ${funcionarioNome}">
+                <tr th:each="funcionario : ${funcionarioNome}">
                     <td th:text="${funcionario.id_funcionario}"></td>
                     <td th:text="${funcionario.nome}"></td>
-                    <td th:text="${funcionario.cnpj}"></td>
-                    <td th:text="${funcionario.ramo}"></td>
+                    <td th:text="${funcionario.salario}"></td>
+                    <td th:text="${funcionario.cargo}"></td>
+                    <td th:text="${funcionario.identificadorEmpresa.nome}"></td>
                 </tr>
             </tbody>
         </table>
